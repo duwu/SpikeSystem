@@ -19,6 +19,7 @@ var (
 	etcdClient *etcd_client.Client
 )
 
+/*
 func initRedis() (err error) {
 	redisPool = &redis.Pool{
 		MaxIdle:     secKillConf.RedisConf.RedisMaxIdle,
@@ -39,7 +40,7 @@ func initRedis() (err error) {
 	}
 
 	return
-}
+}*/
 
 func initEtcd() (err error) {
 	cli, err := etcd_client.New(etcd_client.Config{
@@ -195,7 +196,8 @@ func updateSecProductInfo(secProductInfo []service.SecProductInfoConf) {
 
 	var tmp map[int]*service.SecProductInfoConf = make(map[int]*service.SecProductInfoConf, 1024)
 	for _, v := range secProductInfo {
-		tmp[v.ProductId] = &v
+		produtInfo := v
+		tmp[v.ProductId] = &produtInfo
 	}
 
 	secKillConf.RWSecProductLock.Lock()
