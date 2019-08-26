@@ -2,6 +2,7 @@ package service
 
 import (
 	"sync"
+	"fmt"
 )
 
 type ProductCountMgr struct {
@@ -33,10 +34,12 @@ func (p *ProductCountMgr) Add(productId, count int) {
 
 	cur, ok := p.productCount[productId]
 	if !ok {
+		fmt.Printf("product_id:%v cur:%v\n, map:%v", productId, cur, p.productCount)
 		cur = count
 	} else {
+		fmt.Printf("else product_id:%v cur:%v, map:%v\n", productId, cur, p.productCount)
 		cur += count
 	}
 
-	p.productCount[productId] = count
+	p.productCount[productId] = cur
 }

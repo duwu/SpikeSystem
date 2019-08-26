@@ -32,6 +32,7 @@ type Activity struct {
 	StatusStr string
 	Speed int `db:"sec_speed"`
 	BuyLimit int `db:"buy_limit"`
+	BuyRate float64 `db:"buy_rate"`
 }
 
 type SecProductInfoConf struct {
@@ -143,9 +144,9 @@ func (p *ActivityModel) CreateActivity(activity *Activity) (err error) {
 		return
 	}
 	
-	sql := "insert into activity(name, product_id, start_time, end_time, total, sec_speed, buy_limit)values(?,?,?,?,?,?,?)"
+	sql := "insert into activity(name, product_id, start_time, end_time, total, sec_speed, buy_limit, buy_rate)values(?,?,?,?,?,?,?,?)"
 	_, err = Db.Exec(sql, activity.ActivityName, activity.ProductId, 
-		activity.StartTime, activity.EndTime, activity.Total, activity.Speed, activity.BuyLimit)
+		activity.StartTime, activity.EndTime, activity.Total, activity.Speed, activity.BuyLimit, activity.BuyRate)
 	if err != nil {
 		logs.Warn("select from mysql failed, err:%v sql:%v", err, sql)
 		return
@@ -169,6 +170,7 @@ func (p *ActivityModel) SyncToEtcd(activity *Activity) (err error) {
 	etcdKey  := fmt.Sprintf("%s%s", EtcdPrefix, EtcdProductKey)
 	secProductInfoList, err := loadProductFromEtcd(etcdKey)
 
+
 	var secProductInfo SecProductInfoConf
 	secProductInfo.EndTime =  activity.EndTime
 	secProductInfo.OnePersonBuyLimit = activity.BuyLimit
@@ -177,6 +179,7 @@ func (p *ActivityModel) SyncToEtcd(activity *Activity) (err error) {
 	secProductInfo.StartTime = activity.StartTime
 	secProductInfo.Status = activity.Status
 	secProductInfo.Total = activity.Total
+	secProductInfo.BuyRate = activity.BuyRate
 
 	secProductInfoList = append(secProductInfoList, secProductInfo)
 
@@ -191,6 +194,8 @@ func (p *ActivityModel) SyncToEtcd(activity *Activity) (err error) {
 		logs.Error("put to etcd failed, err:%v, data[%v]", err, string(data))
 		return
 	}
+
+	logs.Debug("put to etcd succ, data:%v", string(data))
 	return
 }
 

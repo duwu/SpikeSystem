@@ -4,7 +4,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
 	"fmt"
-	"SecKill/day17 秒杀抢购系统（四）/SecKill/SecAdmin/model"
+	"go_dev/day14/SecKill/SecAdmin/model"
 )
 
 type ProductController struct {

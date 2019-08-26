@@ -2,11 +2,11 @@ package controller
 
 import (
 	"fmt"
-	"go_dev/day14/SecKill/SecProxy/service"
+	"SecKill/day18 秒杀抢购系统（五）/SecKill/SecProxy/service"
 	"strings"
 	"time"
 
-	"strconv"
+	//"strconv"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
@@ -47,7 +47,8 @@ func (p *SkillController) SecKill() {
 	secRequest.SecTime = secTime
 	secRequest.Source = source
 	secRequest.UserAuthSign = p.Ctx.GetCookie("userAuthSign")
-	secRequest.UserId, _ = strconv.Atoi(p.Ctx.GetCookie("userId"))
+	//secRequest.UserId, _ = strconv.Atoi(p.Ctx.GetCookie("userId"))
+	secRequest.UserId, _ = p.GetInt("user_id")
 	secRequest.AccessTime = time.Now()
 	if len(p.Ctx.Request.RemoteAddr) > 0 {
 		secRequest.ClientAddr = strings.Split(p.Ctx.Request.RemoteAddr, ":")[0]
