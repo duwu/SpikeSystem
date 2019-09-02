@@ -2,7 +2,7 @@ package controller
 
 import (
 	"fmt"
-	"SecKill/day18 秒杀抢购系统（五）/SecKill/SecProxy/service"
+	"github.com/duwu/SpikeSystem/SecKill/SecProxy/service"
 	"strings"
 	"time"
 

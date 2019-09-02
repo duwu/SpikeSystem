@@ -1,7 +1,7 @@
 package router
 
 import (
-	"SecKill/day18 秒杀抢购系统（五）/SecKill/SecProxy/controller"
+	"github.com/duwu/SpikeSystem/SecKill/SecProxy/controller"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"

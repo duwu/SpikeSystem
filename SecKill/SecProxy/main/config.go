@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"go_dev/day14/SecKill/SecProxy/service"
+	"github.com/duwu/SpikeSystem/SecKill/SecProxy/service"
 
 	"strings"
 

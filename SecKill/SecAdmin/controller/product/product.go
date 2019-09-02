@@ -1,10 +1,10 @@
 package product
 
 import (
+	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
-	"fmt"
-	"go_dev/day14/SecKill/SecAdmin/model"
+	"github.com/duwu/SpikeSystem/SecKill/SecAdmin/model"
 )
 
 type ProductController struct {
@@ -25,18 +25,16 @@ func (p *ProductController) ListProduct() {
 	p.Layout = "layout/layout.html"
 }
 
-
-
 func (p *ProductController) CreateProduct() {
-/*
-	productModel := model.NewProductModel()
-	productList, err := productModel.GetProductList()
-	if err != nil {
-		logs.Warn("get product list failed, err:%v", err)
-		return
-	}
+	/*
+		productModel := model.NewProductModel()
+		productList, err := productModel.GetProductList()
+		if err != nil {
+			logs.Warn("get product list failed, err:%v", err)
+			return
+		}
 
-	p.Data["product_list"] = productList
+		p.Data["product_list"] = productList
 	*/
 	p.TplName = "product/create.html"
 	p.Layout = "layout/layout.html"
@@ -46,12 +44,12 @@ func (p *ProductController) SubmitProduct() {
 
 	productName := p.GetString("product_name")
 	productTotal, err := p.GetInt("product_total")
-	
+
 	p.TplName = "product/create.html"
 	p.Layout = "layout/layout.html"
 	errorMsg := "success"
 
-	defer func(){
+	defer func() {
 		if err != nil {
 			p.Data["Error"] = errorMsg
 			p.TplName = "product/error.html"
@@ -75,14 +73,14 @@ func (p *ProductController) SubmitProduct() {
 	if err != nil {
 		logs.Warn("invalid product status, err:%v", err)
 		errorMsg = fmt.Sprintf("invalid product status, err:%v", err)
-		return 
+		return
 	}
 
 	productModel := model.NewProductModel()
 	product := model.Product{
 		ProductName: productName,
-		Total: productTotal,
-		Status: productStatus,
+		Total:       productTotal,
+		Status:      productStatus,
 	}
 
 	err = productModel.CreateProduct(&product)

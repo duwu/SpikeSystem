@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"go_dev/day14/SecKill/SecLayer/service"
+	"github.com/duwu/SpikeSystem/SecKill/SecLayer/service"
 
 	"github.com/astaxie/beego/logs"
 )

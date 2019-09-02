@@ -1,28 +1,24 @@
 package activity
 
 import (
+	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
-//	"fmt"
-	"go_dev/day14/SecKill/SecAdmin/model"
-	"fmt"
+	"github.com/duwu/SpikeSystem/SecKill/SecAdmin/model"
 	"net/http"
 )
-
 
 type ActivityController struct {
 	beego.Controller
 }
 
-
-func (p *ActivityController)CreateActivity(){
+func (p *ActivityController) CreateActivity() {
 	p.TplName = "activity/create.html"
 	p.Layout = "layout/layout.html"
 	return
 }
 
-
-func (p *ActivityController) ListActivity(){
+func (p *ActivityController) ListActivity() {
 
 	activityModel := model.NewActivityModel()
 	activityList, err := activityModel.GetActivityList()
@@ -37,8 +33,7 @@ func (p *ActivityController) ListActivity(){
 	return
 }
 
-
-func (p *ActivityController) SubmitActivity(){
+func (p *ActivityController) SubmitActivity() {
 
 	activityModel := model.NewActivityModel()
 	var activity model.Activity
@@ -48,7 +43,7 @@ func (p *ActivityController) SubmitActivity(){
 
 	var err error
 	var Error string = "success"
-	defer func(){
+	defer func() {
 		if err != nil {
 			p.Data["Error"] = Error
 			p.TplName = "activity/error.html"
@@ -56,57 +51,57 @@ func (p *ActivityController) SubmitActivity(){
 	}()
 
 	name := p.GetString("activity_name")
-	if (len(name) == 0) {
+	if len(name) == 0 {
 		Error = "活动的名字不能为空"
 		err = fmt.Errorf("activity name can not null")
 		return
 	}
 
 	productId, err := p.GetInt("product_id")
-	if (err != nil) {
-		
+	if err != nil {
+
 		err = fmt.Errorf("商品id 非法, err:%v", err)
 		Error = err.Error()
 		return
 	}
-	
+
 	startTime, err := p.GetInt64("start_time")
-	if (err != nil) {
+	if err != nil {
 		err = fmt.Errorf("开始时间 非法, err:%v", err)
 		Error = err.Error()
 		return
 	}
 
 	endTime, err := p.GetInt64("end_time")
-	if (err != nil) {
+	if err != nil {
 		err = fmt.Errorf("结束时间 非法, err:%v", err)
 		Error = err.Error()
 		return
 	}
 
 	total, err := p.GetInt("total")
-	if (err != nil) {
+	if err != nil {
 		err = fmt.Errorf("商品数量 非法, err:%v", err)
 		Error = err.Error()
 		return
 	}
 
 	speed, err := p.GetInt("speed")
-	if (err != nil) {
+	if err != nil {
 		err = fmt.Errorf("商品速度 非法, err:%v", err)
 		Error = err.Error()
 		return
 	}
 
 	limit, err := p.GetInt("buy_limit")
-	if (err != nil) {
+	if err != nil {
 		err = fmt.Errorf("购买限制 非法, err:%v", err)
 		Error = err.Error()
 		return
 	}
 
 	buy_rate, err := p.GetFloat("buy_rate")
-	if (err != nil) {
+	if err != nil {
 		err = fmt.Errorf("购买限制 非法, err:%v", err)
 		Error = err.Error()
 		return

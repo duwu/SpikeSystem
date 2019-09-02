@@ -2,8 +2,8 @@ package router
 
 import (
 	"github.com/astaxie/beego"
-	"go_dev/day14/SecKill/SecAdmin/controller/product"
-	"go_dev/day14/SecKill/SecAdmin/controller/activity"
+	"github.com/duwu/SpikeSystem/SecKill/SecAdmin/controller/activity"
+	"github.com/duwu/SpikeSystem/SecKill/SecAdmin/controller/product"
 )
 
 func init() {

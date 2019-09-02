@@ -1,22 +1,22 @@
 package main
 
 import (
+	"fmt"
 	"github.com/astaxie/beego/logs"
+	etcdclient "github.com/coreos/etcd/clientv3"
+	"github.com/duwu/SpikeSystem/SecKill/SecAdmin/model"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
-	"go_dev/day14/SecKill/SecAdmin/model"
-	etcd_client "github.com/coreos/etcd/clientv3"
-	"fmt"
 	"time"
 )
 
 var Db *sqlx.DB
-var EtcdClient *etcd_client.Client
+var EtcdClient *etcdclient.Client
 
 func initDb() (err error) {
 
 	dns := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s", AppConf.mysqlConf.UserName, AppConf.mysqlConf.Passwd,
-				AppConf.mysqlConf.Host, AppConf.mysqlConf.Port, AppConf.mysqlConf.Database)
+		AppConf.mysqlConf.Host, AppConf.mysqlConf.Port, AppConf.mysqlConf.Database)
 	database, err := sqlx.Open("mysql", dns)
 	if err != nil {
 		logs.Error("open mysql failed, err:%v ", err)
@@ -27,8 +27,8 @@ func initDb() (err error) {
 	return
 }
 
-func initEtcd()(err error) {
-	cli, err := etcd_client.New(etcd_client.Config{
+func initEtcd() (err error) {
+	cli, err := etcdclient.New(etcdclient.Config{
 		Endpoints:   []string{AppConf.etcdConf.Addr},
 		DialTimeout: time.Duration(AppConf.etcdConf.Timeout) * time.Second,
 	})

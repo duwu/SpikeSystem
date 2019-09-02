@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/astaxie/beego"
-	_ "go_dev/day14/SecKill/SecAdmin/router"
 	"fmt"
+	"github.com/astaxie/beego"
+	_ "github.com/duwu/SpikeSystem/SecKill/SecAdmin/router"
 )
 
 func main() {
